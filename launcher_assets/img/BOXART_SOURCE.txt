@@ -1,0 +1,5 @@
+Box art sourced from libretro-thumbnails (Named_Boxarts).
+Matched name: PaRappa the Rapper (USA) (En,Fr,De,Es,It)
+URL: https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/PaRappa%20the%20Rapper%20(USA)%20(En%2CFr%2CDe%2CEs%2CIt).png
+https://github.com/libretro-thumbnails/libretro-thumbnails
+PNG is for README; TGA is for recomp-ui LAUNCHER_BOXART.

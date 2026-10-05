@@ -1,0 +1,13 @@
+{
+  "$schema": "https://recomp.fyi/schema/v1.json",
+  "game": "PaRappaTheRapper",
+  "system": "PS1",
+  "type": "recomp",
+  "toolchain": "psxrecomp",
+  "status": "exploring",
+  "project": "PaRappaTheRapperRecomp",
+  "original": {
+    "region": "USA",
+    "serial": "SCUS-94183"
+  }
+}

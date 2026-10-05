@@ -1,0 +1,31 @@
+{
+  "cue_path": "C:/Users/227572/Downloads/PaRappa the Rapper (USA) (En,Fr,De,Es,It)/PaRappa the Rapper (USA) (En,Fr,De,Es,It).cue",
+  "cue_name": "PaRappa the Rapper (USA) (En,Fr,De,Es,It).cue",
+  "bin_name": "PaRappa the Rapper (USA) (En,Fr,De,Es,It).bin",
+  "track_count": 1,
+  "data_track_size": 727718208,
+  "data_track_md5": "007a1016d499e5fe6eb2702f41ca6c63",
+  "data_track_sha1": "181e2efd2a29c028b28e52ac7827ef7a172ca8b4",
+  "data_track_crc32": "d94ea30c",
+  "boot_exe": "SCUS_941.83",
+  "serial": "SCUS-94183",
+  "serial_exe": "SCUS_941.83",
+  "volume_id": "PLAYSTATION",
+  "display_name": "PaRappaTheRapper",
+  "load_address": "0x80010000",
+  "entry_pc": "0x80028590",
+  "text_size": "0x0005F000",
+  "stack_base": "0x801FFFF0",
+  "require_cue": true,
+  "required_disc_fp": "3cd769379e534282bbbf04077bbd4caa00500bc3b1e6af04f80db8a2930bff68",
+  "boot_exe_sha256": "d4bf594d93fa34a2d129e479dc7ced76bdd4aaafb4abc45794c68c1a81ee2f98",
+  "seed_count": 605,
+  "warnings": [
+    "cue has only 1 TRACK \u2014 Track-01-only dumps fail multi-track netplay/catalog gates; prefer a full Redump cue."
+  ],
+  "notes": [
+    "entry_pc/load_address/text_size/stack_base taken from PS-X EXE header.",
+    "seeds are first-pass boot-EXE JAL targets (+ entry); expect to grow as overlays / runtime paths are discovered.",
+    "required_disc_fp is psxrecomp-toc-v1 (matches runtime DiscIdentity)."
+  ]
+}
