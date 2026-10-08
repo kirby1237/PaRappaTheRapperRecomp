@@ -52,10 +52,12 @@ gte_game_mode = true
 
 [controller]
 default_mode = "digital"
+# PaRappa does not accept a DualShock analog pad. Clamp saved settings too.
+lock_mode = true
 
 # Online mount gate: digests + track count + optional TOC fingerprint
 # (see docs/NETPLAY.md).
-multitap_analog = true
+multitap_analog = false
 [netplay]
 require_cue = true
 required_tracks = 1
