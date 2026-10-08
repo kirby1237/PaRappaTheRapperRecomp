@@ -100,7 +100,7 @@ Positive compensation judges a press earlier. Music, animation, controller
 polling and the song clock keep their stock timing. Scripted playback is excluded.
 The game's button mapping, scoring, turn checks and progression remain in charge.
 
-The local test build has the full game but was built without recomp-ui.
+The local build includes recomp-ui and opens its launcher by default.
 Launch it from PowerShell at the project root:
 
 ```powershell
@@ -109,10 +109,14 @@ Launch it from PowerShell at the project root:
 .\tools\launch_timing.ps1 -Profile controller-headphones -OffsetMs 20
 .\tools\launch_timing.ps1 -Profile keyboard-speakers
 .\tools\launch_timing.ps1 -Stock -BufferMs 180
+.\tools\launch_timing.ps1 -Direct
 ```
 
-The first command selects 10 ms of extra tolerance on each side, zero latency
-compensation, and a 60 ms audio buffer. Adjust compensation in 5 ms steps after
+On first launch, the defaults are 10 ms of extra tolerance on each side, zero
+latency compensation, and a 60 ms audio buffer. Ordinary launches preserve
+selections and timing values saved in the Mods screen; explicit profile or
+timing arguments apply those settings instead. `-Direct` skips the launcher.
+Adjust compensation in 5 ms steps after
 settling on your audio setup. The script changes only this package's selection
 in the isolated build, uses a generated local disc config, and creates separate
 memory cards under `build-timing/timing-saves`. Launch one copy at a time.
@@ -179,7 +183,7 @@ git -C psxrecomp apply ../patches/audio-buffer-target.patch
   -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=C:/msys64/mingw64/bin/gcc.exe `
   -DCMAKE_CXX_COMPILER=C:/msys64/mingw64/bin/g++.exe `
   -DCMAKE_MAKE_PROGRAM=C:/msys64/mingw64/bin/ninja.exe `
-  -DPSX_DEBUG_TOOLS=ON -DPSX_RECOMP_UI=OFF -DPSX_STATIC_RUNTIME=ON `
+  -DPSX_DEBUG_TOOLS=ON -DPSX_RECOMP_UI=ON -DRECOMP_UI_ENABLE_MODS=ON -DPSX_STATIC_RUNTIME=ON `
   -DSDL3_DIR=C:/msys64/mingw64/lib/cmake/SDL3 -DCMAKE_PREFIX_PATH=C:/msys64/mingw64
 & 'C:\Program Files\CMake\bin\cmake.exe' --build build-timing --target psx-runtime parappa_timing_test -j 6
 & 'C:\Program Files\CMake\bin\ctest.exe' --test-dir build-timing -R parappa_timing_test --output-on-failure

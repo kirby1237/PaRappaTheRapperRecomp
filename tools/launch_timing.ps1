@@ -5,6 +5,7 @@ param(
     [ValidateRange(30,500)][int]$BufferMs = 60,
     [switch]$Stock,
     [switch]$Hidden,
+    [switch]$Direct,
     [ValidatePattern('^[a-zA-Z0-9_-]+$')][string]$Profile = 'controller-speakers',
     [string]$Python = 'C:\Users\Matthew\AppData\Local\Programs\Python\Python312\python.exe'
 )
@@ -27,8 +28,16 @@ $taskState = Join-Path $taskBuild 'mods\state.toml'
 $taskSelection = @((Join-Path $PSScriptRoot 'configure_timing.py'), '--state', $taskState,
     '--early', $EarlyMs, '--late', $LateMs, '--offset', $OffsetMs)
 if ($Stock) { $taskSelection += '--stock' }
-& $Python @taskSelection
-if ($LASTEXITCODE -ne 0) { throw 'Timing selection failed.' }
+$taskSelectProfile = $Stock -or -not (Test-Path -LiteralPath $taskState)
+foreach ($taskParameter in @('Profile', 'OffsetMs', 'EarlyMs', 'LateMs')) {
+    if ($PSBoundParameters.ContainsKey($taskParameter)) { $taskSelectProfile = $true }
+}
+# Ordinary UI launches keep selections and values saved in the Mods screen.
+# Explicit profile/timing arguments deliberately select those settings instead.
+if ($taskSelectProfile) {
+    & $Python @taskSelection
+    if ($LASTEXITCODE -ne 0) { throw 'Timing selection failed.' }
+}
 New-Item -ItemType Directory -Path $taskProfiles -Force | Out-Null
 $taskProfileJson = @{OffsetMs=$OffsetMs; EarlyMs=$EarlyMs; LateMs=$LateMs; BufferMs=$BufferMs} | ConvertTo-Json
 [IO.File]::WriteAllText($taskProfilePath, $taskProfileJson, (New-Object Text.UTF8Encoding($false)))
@@ -40,7 +49,9 @@ $taskConfig += "`n[audio]`nbuffer_ms = $BufferMs`n"
 $taskConfigPath = Join-Path $taskBuild 'game-play.toml'
 [IO.File]::WriteAllText($taskConfigPath, $taskConfig, (New-Object Text.UTF8Encoding($false)))
 $taskArgs = @('--game', ('"' + $taskConfigPath + '"'), '--debug-port', '9453',
-    '--no-launcher', '--memcard-dir', 'timing-saves')
+    '--memcard-dir', 'timing-saves')
+if ($Direct -or $Hidden) { $taskArgs += '--no-launcher' }
+else { $taskArgs += '--launcher' }
 if ($Hidden) { $taskArgs += '--hidden-window' }
 $taskProcess = Start-Process -FilePath $taskExe -ArgumentList $taskArgs -WorkingDirectory $taskBuild `
     -WindowStyle Hidden -PassThru
