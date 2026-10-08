@@ -17,6 +17,13 @@ default to 10 ms each when enabled; latency compensation defaults to zero.
 Positive compensation judges a press earlier. Save your selection in the UI.
 The mod applies after input conversion, so controller and keyboard presses
 use the same judgement settings. Configure your controller in the UI.
+PaRappa is locked to a digital PSX pad because it does not recognize Analog
+mode. Existing saved Analog selections are overridden. The supplied default
+mapping uses the D-pad for directions and leaves both sticks unbound; face and
+shoulder buttons keep their usual bindings. A modern DualShock/DualSense or
+Xbox controller can still be used as a digital pad. If upgrading an existing
+installation, clear any saved stick-direction bindings in the controller UI
+to match the new D-pad-only defaults.
 
 Stage 1 was investigated and exercised with stock, forgiving, one-sided and
 signed-offset timing probes. Its stock half-window is about 45 ms; the default

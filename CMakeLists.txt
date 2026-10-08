@@ -65,6 +65,14 @@ else()
 endif()
 add_test(NAME parappa_timing_test COMMAND parappa_timing_test)
 
+add_custom_command(TARGET psx-runtime POST_BUILD
+    COMMAND ${CMAKE_COMMAND}
+        "-DINPUT_SOURCE=${CMAKE_CURRENT_SOURCE_DIR}/input.ini"
+        "-DINPUT_TARGET=$<TARGET_FILE_DIR:psx-runtime>/input.ini"
+        -P "${CMAKE_CURRENT_SOURCE_DIR}/tools/stage_default_input.cmake"
+    COMMENT "Staging default D-pad controller mapping"
+    VERBATIM)
+
 # Stage runtime configs next to the exe for direct build/ launches. Only copy
 # files that exist — never fail POST_BUILD when game_options.toml is absent.
 foreach(_PSX_RUNTIME_CONFIG game.toml game_options.toml)

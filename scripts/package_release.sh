@@ -59,4 +59,5 @@ exec bash "${PACKAGER}" \
   --recompiler-build "${RECOMPILER_BUILD}" \
   --version-env RELEASE_VERSION \
   --disc-hint "your legally owned PaRappaTheRapper disc" \
+  --runtime-file input.ini \
   "${EXTRA[@]}"

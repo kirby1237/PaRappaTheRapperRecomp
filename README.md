@@ -127,7 +127,9 @@ default audio target. Named profiles retain the offset, early/late tolerance and
 audio buffer independently; explicit arguments update that profile. Profiles
 apply to any input device and audio output and do not change controller bindings
 or switch the Windows playback device. Controller support comes from the stock
-SDL input path. A normal upstream build with recomp-ui exposes the
+SDL input path. PaRappa locks controller mode to digital, including previously
+saved Analog settings. New builds/releases use D-pad directions with the sticks
+unbound; existing custom mappings are preserved. The recomp-ui build exposes the
 manifest's controls in Mods / Accessibility.
 
 Retail judgement is `0x80014614`. Input time is at stage context `+0x10`,
