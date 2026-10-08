@@ -16,7 +16,16 @@ Static recompilation of **PaRappaTheRapper** built on
 [psxrecomp](https://github.com/mstan/psxrecomp) and
 [recomp-ui](https://github.com/RetroPortingToolKit/recomp-ui).
 
-_Add a short pitch in catalog_identity.json / README._
+The default internal-resolution preset is **1080p**. The experimental
+**Widescreen** mod starts enabled at **21:9** and expands the 3D gameplay
+view using the native wide renderer. In **Mods > Widescreen**, choose
+21:9, 16:9, **Fit to window**, or original 4:3. Movies and 2D menus keep
+their original proportions; disabling the mod restores the 4:3 default.
+Existing graphics settings take precedence over the new resolution default;
+select 1080p in the launcher when upgrading an existing installation.
+Other stages still need player validation.
+
+![Stage 1 at 21:9 with rhythm cues visible](.github/screenshots/stage1-21x9.png)
 
 | | |
 |---|---|
