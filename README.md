@@ -16,7 +16,8 @@ Static recompilation of **PaRappaTheRapper** built on
 [psxrecomp](https://github.com/mstan/psxrecomp) and
 [recomp-ui](https://github.com/RetroPortingToolKit/recomp-ui).
 
-_Add a short pitch in catalog_identity.json / README._
+Includes an optional Rhythm Timing Assist mod with configurable latency
+compensation and early/late tolerance for controller and keyboard play.
 
 | | |
 |---|---|
@@ -80,7 +81,7 @@ cmake --build build-release --target psx-runtime
 ```
 
 Releases: tag `vX.Y.Z` (or run the *Release builds* workflow). CI builds the
-committed `generated/` C on Linux, Windows and macOS and attaches
+committed `generated/` C on Linux and Windows and attaches
 `prtr-<version>-<platform>.zip`, the compiled game. Locally:
 `scripts/package_release.sh build-release linux-x64`.
 
@@ -90,9 +91,10 @@ This checkout is the isolated `timing-lab` branch of
 `kirby1237/PaRappaTheRapperRecomp`, based on `81faa9fe2e8bb64cac6cc272df04335f9df2dfc1`.
 It does not use the owner's separate PaRappa recomp code, settings or saves.
 Only the retail disc data was copied into this checkout's ignored `disc/` folder;
-its MD5 matches upstream's supported USA image. Framework gitlinks are unchanged;
-the isolated framework working tree has the small audio configuration fix
-preserved in `patches/audio-buffer-target.patch`.
+its MD5 matches upstream's supported USA image. The framework is pinned to
+`0e9845a07b817082a493ed1be2c2bb19bae896c9`, which adds the three-line audio
+configuration fix to upstream's original framework pin. No other framework
+changes or code from the owner's separate recomp are included.
 
 An experimental, default-off **Rhythm Timing Assist** package adds three
 controls: latency compensation, extra early tolerance, and extra late tolerance.
@@ -177,8 +179,8 @@ start of the song until the adjusted time is within the song's timing grid.
 
 ```powershell
 # Build settings used locally (native tools; avoid MSYS path reinterpretation).
-# On a fresh checkout, apply the retained audio fix first (already applied here).
-git -C psxrecomp apply ../patches/audio-buffer-target.patch
+# The audio fix is included in the pinned submodule revision.
+git submodule update --init --recursive
 & 'C:\Program Files\CMake\bin\cmake.exe' -S . -B build-timing -G Ninja `
   -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=C:/msys64/mingw64/bin/gcc.exe `
   -DCMAKE_CXX_COMPILER=C:/msys64/mingw64/bin/g++.exe `

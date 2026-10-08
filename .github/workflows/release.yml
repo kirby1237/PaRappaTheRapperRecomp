@@ -175,14 +175,6 @@ jobs:
           - os: windows-2022
             artifact: windows-x64
             shell: 'msys2 {0}'
-          - os: macos-15
-            artifact: macos-arm64
-            shell: bash
-            deployment_target: '11.0'
-          - os: macos-15-intel
-            artifact: macos-x64
-            shell: bash
-            deployment_target: '11.0'
     defaults:
       run:
         shell: ${{ matrix.shell }}
@@ -501,6 +493,8 @@ jobs:
             -DPSXRECOMP_FORCE_SETUP_HOST=OFF \
             -DPSXRECOMP_ALLOW_NO_BIOS=OFF \
             -DPSX_SETUP_WIZARD=ON \
+            -DPSX_RECOMP_UI=ON \
+            -DRECOMP_UI_ENABLE_MODS=ON \
             -DPSX_GAME_VERSION="${RELEASE_VERSION}" \
             "${EXTRA[@]}" 2>&1 | tee build-ci-configure.log
           # Assert the configure took the FULL path, not the setup-host one.
@@ -540,7 +534,8 @@ jobs:
               exit 1
             fi
           done
-          cmake --build build-ci --target psx-runtime -j"${JOBS}"
+          cmake --build build-ci --target psx-runtime parappa_timing_test -j"${JOBS}"
+          ctest --test-dir build-ci -R '^parappa_timing_test$' --output-on-failure
           # Lobby list pin must match RELEASE_VERSION (the packager enforces).
           STAMP=""
           for cand in \
@@ -722,5 +717,6 @@ jobs:
           files: |
             dist/prtr-*.zip
           generate_release_notes: true
+          prerelease: ${{ contains(needs.prepare.outputs.version, '-') }}
           fail_on_unmatched_files: true
           target_commitish: ${{ github.sha }}
