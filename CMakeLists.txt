@@ -53,6 +53,18 @@ psxrecomp_add_game_runtime(psx-runtime
     CODEGEN_SETUP_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/codegen_setup.c"
 )
 
+target_sources(psx-runtime PRIVATE src/parappa_timing.c)
+
+enable_testing()
+add_executable(parappa_timing_test EXCLUDE_FROM_ALL tools/test_timing.c)
+target_include_directories(parappa_timing_test PRIVATE "${PSXRECOMP_ROOT}/runtime/include")
+if(MSVC)
+    target_compile_options(parappa_timing_test PRIVATE /UNDEBUG)
+else()
+    target_compile_options(parappa_timing_test PRIVATE -UNDEBUG)
+endif()
+add_test(NAME parappa_timing_test COMMAND parappa_timing_test)
+
 # Stage runtime configs next to the exe for direct build/ launches. Only copy
 # files that exist — never fail POST_BUILD when game_options.toml is absent.
 foreach(_PSX_RUNTIME_CONFIG game.toml game_options.toml)

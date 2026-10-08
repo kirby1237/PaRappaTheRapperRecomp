@@ -1,0 +1,66 @@
+format_version = 7
+id = "parappa.accessibility.timing"
+version = "0.1.0"
+name = "Rhythm Timing Assist"
+author = "Timing lab"
+description = "Adjust rhythm judgement for display, controller and audio delay."
+resolver = "declarative"
+save_compatibility = "shared"
+
+[[target]]
+game_id = "SCUS-94183"
+
+[[feature]]
+id = "judgement"
+name = "Rhythm Timing Assist"
+description = "Adds early and late tolerance while preserving the game's button and scoring rules. Experimental: Stage 1 has been investigated; other stages need testing."
+group = "Accessibility"
+channel = "experimental"
+default_enabled = false
+
+[[option]]
+feature = "judgement"
+id = "offset_ms"
+label = "Latency compensation (ms)"
+description = "Positive values judge your presses earlier; negative values judge them later. Start at zero and adjust in small steps. Applies to judgement only; music and visuals keep their original clocks."
+type = "integer"
+min = -300
+max = 300
+step = 5
+default = 0
+
+[[option]]
+feature = "judgement"
+id = "early_ms"
+label = "Extra early tolerance (ms)"
+description = "Extra tolerance beyond the stock window. Rounded to musical ticks and capped at the midpoint between neighbouring timing cells. Zero preserves stock early tolerance."
+type = "integer"
+min = 0
+max = 60
+step = 5
+default = 10
+
+[[option]]
+feature = "judgement"
+id = "late_ms"
+label = "Extra late tolerance (ms)"
+description = "Extra tolerance beyond the stock window. Rounded to musical ticks and capped at the midpoint between neighbouring timing cells. Zero preserves stock late tolerance."
+type = "integer"
+min = 0
+max = 60
+step = 5
+default = 10
+
+[[patch]]
+feature = "judgement"
+target = "main_exe"
+address = 0x80014718
+expected = "21 18 65 00"
+replace = "21 18 a3 00"
+# ADDU v1,v1,a1 -> ADDU v1,a1,v1. Identical guest operation. The guarded
+# change selects the interpreter for this small routine, where instruction
+# hooks run even with upstream's unmodified generated C. No framework edits.
+
+[[plugin]]
+feature = "judgement"
+id = "parappa.timing"
