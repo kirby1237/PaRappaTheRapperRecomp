@@ -1,0 +1,2 @@
+# Shell entry points must remain executable on Linux after Windows edits.
+*.sh text eol=lf
