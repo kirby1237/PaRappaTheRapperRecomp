@@ -1,0 +1,43 @@
+format_version = 7
+id = "parappa.enhancement.widescreen"
+version = "0.1.0"
+name = "Widescreen"
+author = "mstan"
+description = "Expand the gameplay view for ultrawide and widescreen displays."
+resolver = "declarative"
+save_compatibility = "shared"
+
+[[target]]
+game_id = "SCUS-94183"
+
+[[feature]]
+id = "widescreen"
+name = "Widescreen"
+description = "Expand 3D gameplay using the native wide renderer. Movies and 2D menus keep their original proportions. Experimental: other stages need player validation."
+group = "Display"
+channel = "experimental"
+default_enabled = true
+
+[[option]]
+feature = "widescreen"
+id = "aspect"
+label = "Screen fit"
+type = "choice"
+default = "21:9"
+
+[[option.choice]]
+value = "21:9"
+label = "21:9 ultrawide"
+[[option.choice]]
+value = "16:9"
+label = "16:9 widescreen"
+[[option.choice]]
+value = "adaptive"
+label = "Fit to window"
+[[option.choice]]
+value = "4:3"
+label = "Original 4:3"
+
+[[plugin]]
+feature = "widescreen"
+id = "parappa.widescreen"

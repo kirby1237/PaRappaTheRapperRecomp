@@ -42,6 +42,13 @@ overlay_cache = true
 [video]
 renderer = "opengl"
 aspect_ratio = "4:3"
+internal_resolution = "1080p"
+resolution_reference_lines = 240
+
+[widescreen]
+native_wide = true
+auto_ui_squash = true
+gte_game_mode = true
 
 [controller]
 default_mode = "digital"
